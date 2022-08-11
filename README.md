@@ -7,3 +7,4 @@
 - Mergear branches
 - Prueba de errores
 ![img error merge](errorMerge.png)
+![img error merge](errorMerge2.png)
