@@ -5,3 +5,4 @@
 - Pushear cambios con un mensaje 
 - Realizar un pull request
 - Mergear branches
+- Prueba de errores 
