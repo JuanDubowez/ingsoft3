@@ -6,3 +6,4 @@
 - Realizar un pull request
 - Mergear branches
 - Prueba de errores
+![img error merge](errorMerge.png)
