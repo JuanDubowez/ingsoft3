@@ -1,13 +1,4 @@
 # Ingenieria de Software 3
 
-## Ejercicios de Versionado 
-- Crear branch
-- Pushear cambios con un mensaje 
-- Realizar un pull request 
-> Los pull request permiten no solo llevar de forma más ordenada las tareas en la etapa del desarrollo, sino también crear propuestas o cambios que puedan ser integrados posteriormente a dicho proyecto. Básicamente un pull request es una petición para integrar nuestras propuestas o cambios de código a un proyecto.
-- Mergear branches
-- Prueba de errores
-![img error merge](errorMerge.png)
-![img error merge](errorMerge2.png)
-- Ejercicios Secundarios
-![img ej secundarios](ejerciciosSecundarios.png)
+## Alumno: Dubowez, Juan Cruz
+## Año: 2022
