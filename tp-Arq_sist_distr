@@ -1,0 +1,32 @@
+# Ejercicios de Arquitectura de Sistemas Distribuidos
+## Sistema distribuido simple
+- Crear una red Docker:  
+> docker network create -d bridge mybridge
+- Instanciar una base de datos Redis conectada a esa Red:
+> docker run -d --net mybridge --name db redis:alpine
+- Levantar una aplicacion web, que utilice esta base de datos
+> docker run -d --net mybridge -e REDIS_HOST=db -e REDIS_PORT=6379 -p 5000:5000 --name web alexisfr flask-app:latest
+
+![img abrir un redis y una app que lo consuma](./imgs/redisInDocker_wApp.png)
+- Chequeo de los contenedores y la red Docker: 
+  
+![Chequeo de los contenedores y red](./imgs/chequeoContenedoresyRed.png) 
+![Chequeo de los contenedores y red](./imgs/chequeoContenedoresyRed2.png)
+
+## Analisis del sistema
+- El sistema utiliza flask y redis como db. Contiene una funcion "hello" que incrementa el valor de  *hits* en uno, utilizando la funcion de redis incr y luego muestra el valor de *hits* en un print
+- ¿Para qué se sirven y porque están los parámetros -e en el segundo Docker run del ejercicio 1?
+> Para agregar variables de entorno y puedan funcionar en un puerto especifico.
+- Si borro el contenedor web, y vuelvo a levantarlo. La web mantiene persistente los datos anteriores.
+- Si borro el contenedor db, la web devuelve un error ya que no reconoce un servicio llamado db de redis.
+![Error redis connection](./imgs/errorRedisConnect.png)
+
+- Si vuelvo a levantar el contenedor, la web funciona pero los datos anteriores de la base, son borrados.
+- Para mantener la persistencia, habria que crear un volumes.
+
+## Docker Compose
+- Correr el docker compose creado 
+> docker-compose up -d
+- Que hizo el docker compose?
+![Que hace el docker-compose](./img/../imgs/queHaceDockerCompose.png)
+Levantó dos contenedores con redis y la app respectivamente. En la app genera el vinculo con el servicio db y crea el entorno para que levante la app en el puerto 5000. Y por ultimo crea el volumes en la db para que se persista la informacion
