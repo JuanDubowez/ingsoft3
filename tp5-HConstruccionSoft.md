@@ -79,3 +79,86 @@ site: controla la creación del site de documentación de tu proyecto.
 - Corriendo el .jar generado, la app nos devuelve un print de "hola mundo"
   
 ![resultado del build y correr la app generada](./imgs/compilarYCorrerService.png)
+
+## Manejo de dependencias
+Cambiando el codigo de la app.java, el build genera un error
+~~~
+COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /home/juandu/Escritorio/INGSOFT3/ingsoft3/ejemplo-uber-jar/src/main/java/ar/edu/ucc/App.java:[2,17] package org.slf4j does not exist
+[ERROR] /home/juandu/Escritorio/INGSOFT3/ingsoft3/ejemplo-uber-jar/src/main/java/ar/edu/ucc/App.java:[3,17] package org.slf4j does not exist
+[ERROR] /home/juandu/Escritorio/INGSOFT3/ingsoft3/ejemplo-uber-jar/src/main/java/ar/edu/ucc/App.java:[12,9] cannot find symbol
+  symbol:   class Logger
+  location: class ar.edu.ucc.App
+[ERROR] /home/juandu/Escritorio/INGSOFT3/ingsoft3/ejemplo-uber-jar/src/main/java/ar/edu/ucc/App.java:[12,22] cannot find symbol
+  symbol:   variable LoggerFactory
+  location: class ar.edu.ucc.App
+~~~
+
+Agregando una dependencia, el build funciona y genera el .jar
+
+Al correr la app con el comando: **java -cp target/ejemplo-uber-jar-1.0-SNAPSHOT.jar ar.edu.ucc.App** se genera el siguiente error
+~~~
+Exception in thread "main" java.lang.NoClassDefFoundError: org/slf4j/LoggerFactory
+	at ar.edu.ucc.App.main(App.java:12)
+Caused by: java.lang.ClassNotFoundException: org.slf4j.LoggerFactory
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522)
+	... 1 more
+~~~
+
+El error viene dado ya que no reconoce la libreria org/slf4j que contiene el loggerFactory
+
+Al correr la app con el siguiente comando, en el cual definimos el path donde debe encontrar la libreroa: 
+> java -cp target/ejemplo-uber-jar-1.0-SNAPSHOT.jar:$HOME/.m2/repository/org/slf4j/slf4j-api/1.7.22/slf4j-api-1.7.22.jar:$HOME/.m2/repository/ch/qos/logback/logback-classic/1.2.1/logback-classic-1.2.1.jar:$HOME/.m2/repository/ch/qos/logback/logback-core/1.2.1/logback-core-1.2.1.jar ar.edu.ucc.App
+ 
+el resultado obtenido es el correcto, y la app devuelve:
+~~~
+16:22:22.762 [main] INFO ar.edu.ucc.App - Hola Mundo!
+~~~
+
+Una solucion mas comoda es incluir en el pom un plugin de maven llamado maven shade plugin. Entonces para correr la app no hace falta especificar el path.
+
+## Ejemplo con Node.js
+- Crear una nueva aplicacion con el comando **npx create-react-app my-app**
+- npm maneja las dependencias y paquetes de la siguiente manera (ver package.json)
+~~~
+"dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+~~~
+**jest-dom**: Libreria que provee de componentes DOM (Data Object Modelling) para realizar pruebas.
+
+**react**: Framework para la facilitación de la creación de aplicaciones reactivas de una sola pagina.
+
+**react-dom**: proporciona métodos específicos del DOM que pueden ser utilizados en el nivel más alto de tu aplicación como una alternativa a React.
+
+**react-scripts**: incluye configuraciones y scripts para la realización de la app por default de React "Create App React".
+
+**web-vitals**: iniciativa de Google para proporcionar una guía unificada de indicadores de calidad.
+
+## Ejemplo con python
+- Instalar dependencias de python:
+> sudo apt install build-essential python3-dev
+> pip3 install cookiecutter
+
+- Correr el scaffold 
+~~~
+cookiecutter https://github.com/candidtim/cookiecutter-flask-minimal.git
+~~~
+![correr scaffold python](./imgs/correrScaffold.png)
+
+-Corremos la app en /test con el comando **make run**
+![app python corriendo](./imgs/runningAppPy.png)
+
+|Tool | Descripción| 
+|--------- | ----------- |
+| cookiecutter | Sin duda, uno de los dolores de cabeza para cualquier persona que se dedique a realizar un proyecto de código, es organizar las carpetas y archivos en nuestro equipo. Ya sea backend, frontend o Data Science la problemática es la misma. Cookiecutter es una herramienta que permite automatizar este proceso, podrás usar platillas de otros desarrolladores o crear la tuya. Podremos ser más organizados, profesionales y ahorraremos mucho tiempo.|
+| make | se encarga de construir programas. Es una herramienta muy poderosa que sirve para varias cosas, la más simple de ellas es compilar y ejecutar código|
+| pip |  es el comando para instalar paquetes de Python integrados. Automatiza la conexión al sitio https://pypi.org/, la descarga, la instalación e incluso la compilación del módulo solicitado. Además, se ocupa de las dependencias de cada paquete.|
