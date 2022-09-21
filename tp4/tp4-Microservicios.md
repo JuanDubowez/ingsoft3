@@ -2,7 +2,7 @@
 ## Instalacion
 - Correr el docker-compose e ingresar a http://localhost
 - *Vista de "mis compras":*
-![Corriendo el sistema](./imgs/frontdelservice.png)
+![Corriendo el sistema](../imgs/frontdelservice.png)
 
 ## Investigacion de los componentes
 - El sistema esta compuesto por los siguientes componentes:
@@ -42,7 +42,7 @@ Se utilizan repositorios separados para el código y la configuracion del sistem
 - Cuando se ejecuta el comando: *curl http://localhost/catalogue*, 
 el servicio que procesa la operacion es **catalogue**
 - Cuando se ejecuta el comando: *curl http://localhost/tags*, el servicio que procesa la operacion es **catalogue**
-![endpoints](./imgs/endpoints.png)
+![endpoints](../imgs/endpoints.png)
 
 ## Persistencia
 

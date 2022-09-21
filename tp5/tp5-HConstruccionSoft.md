@@ -4,7 +4,7 @@
 - Instalar segun SO
 - Agregar la variable de entorno JAVA_HOME:
 
-    ![Setear el entorno de JAVA_HOME](./imgs/java_entorno.png)
+    ![Setear el entorno de JAVA_HOME](../imgs/java_entorno.png)
 
 ### Maven
 - Instalar con el comando: 
@@ -65,7 +65,7 @@ site: controla la creación del site de documentación de tu proyecto.
 |deploy| hecho en el entorno de compilación, copia el paquete final en el repositorio remoto para compartirlo con otros desarrolladores y proyectos.|
 
 - Corriendo un pom.xml
-![resultado de un mvn clean install](./imgs/mvnBuildear.png)
+![resultado de un mvn clean install](../imgs/mvnBuildear.png)
 > Vemos como al principio obtiene los plugins desde el repo central y finalmente buildea y crea un repo local
 
 ## Maven
@@ -78,7 +78,7 @@ site: controla la creación del site de documentación de tu proyecto.
 
 - Corriendo el .jar generado, la app nos devuelve un print de "hola mundo"
   
-![resultado del build y correr la app generada](./imgs/compilarYCorrerService.png)
+![resultado del build y correr la app generada](../imgs/compilarYCorrerService.png)
 
 ## Manejo de dependencias
 Cambiando el codigo de la app.java, el build genera un error
@@ -152,10 +152,10 @@ Una solucion mas comoda es incluir en el pom un plugin de maven llamado maven sh
 ~~~
 cookiecutter https://github.com/candidtim/cookiecutter-flask-minimal.git
 ~~~
-![correr scaffold python](./imgs/correrScaffold.png)
+![correr scaffold python](../imgs/correrScaffold.png)
 
 -Corremos la app en /test con el comando **make run**
-![app python corriendo](./imgs/runningAppPy.png)
+![app python corriendo](../imgs/runningAppPy.png)
 
 |Tool | Descripción| 
 |--------- | ----------- |
