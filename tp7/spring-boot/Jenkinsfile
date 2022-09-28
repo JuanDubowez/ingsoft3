@@ -5,6 +5,9 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
     }
+    environment{
+        dockerhub=credentials('7e5e8a55-d454-4093-805e-85b90144a73e')   
+    }
 
     stages {
         stage('Build') {
@@ -22,6 +25,15 @@ pipeline {
                  success {
                     // generar y publicar el artefacto generado
                     archiveArtifacts 'tp6/spring-boot/target/*.jar'
+                }
+            }
+        }
+        stage('DockerImg'){
+            steps{
+                sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin"
+                dir('tp6/spring-boot'){
+                sh "docker build -t test-node ."
+                sh "docker push juandubowez/test-node:latest"
                 }
             }
         }

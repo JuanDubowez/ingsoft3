@@ -114,3 +114,12 @@ pipeline {
 - Como resultado de este ejercicio proveer el script en un archivo spring-boot/Jenkinsfile
 
 ![pipeline para proyecto spring boot](../imgs/pipelineSpringBootApp.png)
+
+## Publicar imagen en Docker hub
+- Agregar credenciales de Docker
+  
+![agregar credenciales](../imgs/addDockerCredentials.png)
+
+- Imagen publicada en Docker hub a traves del pipeline
+
+![pipelineDockerhub](../imgs/pipPublicarDockerHubImg.png)
