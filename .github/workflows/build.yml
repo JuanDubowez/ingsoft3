@@ -40,5 +40,5 @@ jobs:
       # Compile the application
       - name: Build with Maven
         run: |
-          cd tp8/spring-boot/
+          cd tp7/spring-boot/
           mvn -B package --file pom.xml
