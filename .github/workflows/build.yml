@@ -72,9 +72,9 @@ jobs:
           context: ./tp6/spring-boot/
           # Note: tags has to be all lower-case
           tags: |
-            juandubowez/spring-boot-githubactions:latest 
+            ${{ secrets.DOCKERHUB_TOKEN }}/spring-boot-githubactions:latest 
           # build on feature branches, push only on master branch
-          push: ${{ github.ref == 'refs/heads/master' }}
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
