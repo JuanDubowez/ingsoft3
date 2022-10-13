@@ -21,8 +21,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class HelloWorldService {
 
-	
-
 	public String getHelloMessage() {
 		return "Spring boot says hello from a Docker container";
 	}
