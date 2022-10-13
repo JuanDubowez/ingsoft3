@@ -185,3 +185,11 @@ public class SampleControllerTest extends AbstractTest {
 ## Capturar los unit tests como parte del proceso de CI/CD
 - Hacer los cambios en Jenkins (o en la herramienta de CICD utilizada) si es necesario, para capturar los resultados de los unit tests y mostrarlos en la ejecución del build.
 
+- Agrego la siguiente linea al pipeline para capturar los resultados del unitest
+>  junit '**/target/surefire-reports/TEST-*.xml'
+
+![Durante el build son corridos los test](../imgs/testRunEnBuild.png)
+
+![resultados capturados del pipeline en Jenkins](../imgs/resBuildJenkinsArtifacts.png)
+
+![resultados de los test en Jenkins](../imgs/resTestArtifactPipeline.png)
