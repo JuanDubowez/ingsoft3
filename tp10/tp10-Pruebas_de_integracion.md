@@ -135,8 +135,118 @@ github --
 
   OK  | 1 passed   // 7s
 ```
-
 - Para generar selectores fácilmente utilizamos plugins como (Firefox o Chrome)
   - TruePath https://addons.mozilla.org/en-US/firefox/addon/truepath/
   - ChroPath https://chrome.google.com/webstore/detail/chropath/ljngjbnaijcbncmcnjfhigebomdlkcjo
-  
+
+## 3- Testeando la aplicación spring-boot
+- En un directorio, por ejemplo **.\proyectos\spring-boot-it** ejecutar:
+```bash
+npx create-codeceptjs .
+```
+- Instalar CodeceptJS con la librería webdriverio
+```npm install codeceptjs chai --save-dev```
+- Inicializar CodeceptJS: ```npx codeceptjs init```
+- Responder las preguntas. Aceptar valores por defecto. Cuando pregunte por url colocar `http://localhost:8080` y y el nombre de los tests poner `spring-boot`
+- Editar el archivo generado `spring-boot_test.js`:
+```javascript
+Feature('spring-boot');
+
+const expect = require('chai').expect;
+const {I} = inject();
+
+Scenario('Verify a successful call', async () => {
+	const res = await I.sendGetRequest('/');
+	expect(res.status).to.eql(200);
+});
+
+Scenario('Verify return value', async () => {
+	const res = await I.sendGetRequest('/');
+	//console.log(res);
+	expect(res.data.message).to.eql('Spring boot says hello from a Docker container');
+});
+```
+- Reemplazar la sección helpers de codecept.conf.js por:
+```javascript
+	helpers: {
+		REST: {
+			endpoint: "http://localhost:8080",
+			onRequest: () => {
+			}
+		}
+	}
+```
+- Levantar la aplicación spring-boot en otra consola (usando java o Docker):
+```bash
+cd ./proyectos/spring-boot
+java -jar target/spring-boot-sample-actuator-2.0.2.jar
+```
+- Ejecutar los tests desde la carpeta `.\proyectos\spring-boot-it`
+```
+npx codeceptjs run --steps
+```
+- Analizar resultados
+```js
+$ npx codeceptjs run --steps
+CodeceptJS v3.3.6 #StandWithUkraine
+Using test root "/home/juandu/Escritorio/INGSOFT3/ingsoft3/tp10/proyectos/spring-boot-it"
+
+spring-boot --
+  Verify a successful call
+    I send get request "/"
+  ✔ OK in 65ms
+
+  Verify return value
+    I send get request "/"
+  ✔ OK in 21ms
+
+  OK  | 2 passed   // 105ms
+```
+- Codeceptjs realiza dos tests, el primero realiza un get request al / y espera un 200 y el segundo realiza el get request y verifica que el mensaje esperado sea "Spring boot says hello from a Docker container"
+
+## Habilitar reportes para utilizarlos en CICD
+- Instalar el módulo para reporting
+```bash
+npm i mocha-junit-reporter mocha-multi --save
+```
+- Reemplazar la key mocha en el archivo codecept.conf.js por:
+
+```javascript
+	mocha:  {
+    "reporterOptions": {
+      "codeceptjs-cli-reporter": {
+        "stdout": "-",
+        "options": {
+          "steps": true,
+        }
+      },
+      "mocha-junit-reporter": {
+        "stdout": "./output/console.log",
+        "options": {
+          "mochaFile": "./output/result.xml"
+        },
+        "attachments": true //add screenshot for a failed test
+		  }
+		}
+	}
+```
+- Ejecutar los tests nuevamente
+```bash
+npx codeceptjs run --steps --reporter mocha-multi
+```
+- La salida compatible con Jenkins esta en ./output/results.xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.389" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-10-20T19:11:04" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="spring-boot" timestamp="2022-10-20T19:11:04" tests="2" file="/home/juandu/Escritorio/INGSOFT3/ingsoft3/tp10/proyectos/spring-boot-it/spring-boot_test.js" time="0.382" failures="0">
+    <testcase name="spring-boot: Verify a successful call" time="0.344" classname="Verify a successful call">
+    </testcase>
+    <testcase name="spring-boot: Verify return value" time="0.026" classname="Verify return value">
+    </testcase>
+  </testsuite>
+</testsuites>
+```
+## Integrar la ejecución en Jenkins
+- Utilizando la funcionalidad de Junit test en Jenkins colectar estos resultados de la ejecución después del deployment.
