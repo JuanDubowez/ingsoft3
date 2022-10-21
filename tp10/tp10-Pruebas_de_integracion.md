@@ -250,3 +250,15 @@ npx codeceptjs run --steps --reporter mocha-multi
 ```
 ## Integrar la ejecución en Jenkins
 - Utilizando la funcionalidad de Junit test en Jenkins colectar estos resultados de la ejecución después del deployment.
+- Agregamos el siguente stage en el pipeline:
+~~~
+stage('Integracion Tests'){
+  steps{
+    dir('tp10/proyectos/spring-boot-it/output'){
+      junit 'result.xml'
+    }
+  }
+}
+~~~
+![resutlado test integracion con jenkins](../imgs/integracionTestJenkins1.png)
+![resutlado test integracion con jenkins](../imgs/integracionTestJenkins2.png)
