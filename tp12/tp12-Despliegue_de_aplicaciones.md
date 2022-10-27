@@ -42,8 +42,10 @@ heroku container:release web --app=sleepy-wave-80453
 ```
 - Nuestra aplicación estará ahora disponible en https://sleepy-wave-80453.herokuapp.com/
 ```
-$ curl https://sleepy-wave-80453.herokuapp.com/employees
+$ curl https://sleepy-wave-80453.herokuapp.com
 {"message":"Spring boot says hello from a Docker container"}
 $
 ```
 - Con esto vemos que está retornando el mensaje esperado.
+
+![App deployada en heroku](../imgs/appDeployHeroku.png)
