@@ -13,11 +13,10 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  #
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -36,3 +35,16 @@ jobs:
         run: |
           cd tpIntegrador/example-voting-app-master/worker/
           mvn -B package --file pom.xml
+    
+      # Install app.py dependences
+      - name: Install python app dependences 
+        run: |
+          cd tpIntegrador/example-voting-app-master/vote/
+          pip install -r requirements.txt
+
+      # Install nodejs dependences
+      - name: Install nodejs app dependences
+        run: |
+          cd tpIntegrador/example-voting-app-master/result/
+          npm ci \
+          && npm cache clean --force \
