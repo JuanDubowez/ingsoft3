@@ -1,10 +1,6 @@
-# version is now using "compose spec"
-# v2 and v3 are now combined!
-# docker-compose v1.27+ required
-
 services:
   vote:
-    build: ./vote
+    image: juandubowez/vote
     # use python rather than gunicorn for local dev
     command: python app.py
     depends_on:
@@ -19,7 +15,7 @@ services:
       - back-tier
 
   result:
-    build: ./result
+    image: juandubowez/result
     # use nodemon rather than node for local dev
     command: nodemon server.js
     depends_on:
@@ -35,8 +31,7 @@ services:
       - back-tier
 
   worker:
-    build:
-      context: ./worker
+    image: juandubowez/worker
     depends_on:
       redis:
         condition: service_healthy 
@@ -67,6 +62,8 @@ services:
     healthcheck:
       test: /healthchecks/postgres.sh
       interval: "5s"
+    ports:
+      - "4001:5432"
     networks:
       - back-tier
 
