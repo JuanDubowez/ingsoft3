@@ -1,6 +1,7 @@
 services:
   vote:
     image: juandubowez/vote
+    build: ./vote
     # use python rather than gunicorn for local dev
     command: python app.py
     depends_on:
@@ -16,6 +17,7 @@ services:
 
   result:
     image: juandubowez/result
+    build: ./result
     # use nodemon rather than node for local dev
     command: nodemon server.js
     depends_on:
@@ -32,6 +34,7 @@ services:
 
   worker:
     image: juandubowez/worker
+    build: ./worker
     depends_on:
       redis:
         condition: service_healthy 
