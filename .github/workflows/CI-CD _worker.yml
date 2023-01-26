@@ -5,6 +5,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ tpIntegrador ]
+    paths:
+      - './tpIntegrador/example-voting-app-master/worker/**'
   pull_request:
     branches: [ main ]
 
@@ -13,9 +15,9 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # job to build the microservices
+  # job to build the microservice
   build-microservices:
-    name: Build microservices
+    name: Build worker app
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -40,19 +42,6 @@ jobs:
         run: |
           cd tpIntegrador/example-voting-app-master/worker/
           mvn -B package --file pom.xml
-    
-      # Install app.py dependences
-      - name: Install python app dependences 
-        run: |
-          cd tpIntegrador/example-voting-app-master/vote/
-          pip install -r requirements.txt
-
-      # Install nodejs dependences
-      - name: Install nodejs app dependences
-        run: |
-          cd tpIntegrador/example-voting-app-master/result/
-          npm ci \
-          && npm cache clean --force 
 
   # job to build and publish docker image
   build-and-push-docker-image:
@@ -86,24 +75,27 @@ jobs:
           # build on feature branches, push only on master branch
           push: ${{ github.ref == 'refs/heads/tpIntegrador' }}
 
-      - name: Build vote image and push to Docker Hub
-        uses: docker/build-push-action@v2
+  # job to deploy service to Railway
+  deploy:
+    name: Deploy service
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node 16
+        uses: actions/setup-node@v1
         with:
-          # relative path to the place where source code with Dockerfile is located
-          context: ./tpIntegrador/example-voting-app-master/vote/
-          # Note: tags has to be all lower-case
-          tags: juandubowez/vote:latest 
-          # build on feature branches, push only on master branch
-          push: ${{ github.ref == 'refs/heads/tpIntegrador' }}
+          node-version: 16.x
 
-      - name: Build result image and push to Docker Hub
-        uses: docker/build-push-action@v2
-        with:
-          # relative path to the place where source code with Dockerfile is located
-          context: ./tpIntegrador/example-voting-app-master/result/
-          # Note: tags has to be all lower-case
-          tags: juandubowez/result:latest 
-          # build on feature branches, push only on master branch
-          push: ${{ github.ref == 'refs/heads/tpIntegrador' }}
+      - name: Install packages
+        run: yarn install --frozen-lockfile
 
+      - name: Install Railway
+        run: npm i -g @railway/cli
 
+      - name: Deploy worker app
+        working-directory: ./tpIntegrador/example-voting-app-master/worker/
+        run: railway up -s worker
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
