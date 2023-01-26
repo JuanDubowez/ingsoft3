@@ -6,7 +6,7 @@ on:
   push:
     branches: [ tpIntegrador ]
     paths:
-      - './tpIntegrador/example-voting-app-master/vote/**'
+      - 'tpIntegrador/example-voting-app-master/vote/**'
   pull_request:
     branches: [ main ]
 

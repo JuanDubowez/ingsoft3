@@ -1,4 +1,4 @@
-name: CI-CD
+name: CI-CD_worker
 
 # Controls when the workflow will run
 on:
@@ -6,7 +6,7 @@ on:
   push:
     branches: [ tpIntegrador ]
     paths:
-      - './tpIntegrador/example-voting-app-master/worker/**'
+      - 'tpIntegrador/example-voting-app-master/worker/**'
   pull_request:
     branches: [ main ]
 
