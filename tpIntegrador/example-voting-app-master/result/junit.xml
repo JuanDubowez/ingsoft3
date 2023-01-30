@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Test Suite" tests="1" failures="0" errors="0" time="3.737">
+  <testsuite name="test result service" errors="0" failures="0" skipped="0" timestamp="2023-01-30T22:08:14" time="2.289" tests="1">
+    <testcase classname="test result service try get porcentages " name="test result service try get porcentages " time="0.004">
+    </testcase>
+  </testsuite>
+</testsuites>

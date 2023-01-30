@@ -31,6 +31,25 @@ jobs:
           cd tpIntegrador/example-voting-app-master/result/
           npm ci \
           && npm cache clean --force 
+  unit-tests: 
+    name: Run and post unit test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      # Run node unit tests
+      - name: post unit test
+        run: |
+          cd tpIntegrador/example-voting-app-master/result/
+          npm install jest
+          npm install -D jest-environment-jsdom
+          npm install jest-junit 
+          npm run test
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v3
+        if: always() # always run even if the previous step fails
+        with:
+          report_paths: 'tpIntegrador/example-voting-app-master/result/junit.xml'
 
   # job to build and publish docker image
   build-and-push-docker-image:
