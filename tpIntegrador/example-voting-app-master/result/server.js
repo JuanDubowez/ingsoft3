@@ -5,6 +5,7 @@ var express = require('express'),
     path = require('path'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
+    voteCollector = require('./views/voteCollector')
     methodOverride = require('method-override'),
     app = express(),
     server = require('http').Server(app),
@@ -51,22 +52,12 @@ function getVotes(client) {
     if (err) {
       console.error("Error performing query: " + err);
     } else {
-      var votes = collectVotesFromResult(result);
+      var votes = voteCollector.collectVotesFromResult(result);
       io.sockets.emit("scores", JSON.stringify(votes));
     }
 
     setTimeout(function() {getVotes(client) }, 1000);
   });
-}
-
-function collectVotesFromResult(result) {
-  var votes = {a: 0, b: 0};
-
-  result.rows.forEach(function (row) {
-    votes[row.vote] = parseInt(row.count);
-  });
-
-  return votes;
 }
 
 app.use(cookieParser());
@@ -89,3 +80,4 @@ server.listen(port, function () {
   var port = server.address().port;
   console.log('App running on port ' + port);
 });
+
