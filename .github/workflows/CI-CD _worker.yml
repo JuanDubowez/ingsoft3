@@ -38,21 +38,18 @@ jobs:
           cd tpIntegrador/example-voting-app-master/worker/
           mvn -B dependency:resolve 
       # Compile Worker application
-      - name: Build with Maven
+      - name: Build and test with Maven
         run: |
           cd tpIntegrador/example-voting-app-master/worker/
           mvn -B package --file pom.xml
-      - name: Test
-        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
-      - name: Report
+      - name: Report test
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: Maven Tests
-          path: target/surefire-reports/*.xml
+          path: 'tpIntegrador/example-voting-app-master/worker/target/surefire-reports/*.xml'
           reporter: java-junit
-          fail-on-error: true
 
   # job to build and publish docker image
   build-and-push-docker-image:

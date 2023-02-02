@@ -28,19 +28,20 @@ class Worker {
     }
   }
 
+  public static String generateInsertStatement(String voterID, String vote){
+    return String.format("INSERT INTO votes (id, vote) VALUES (%s, %s)", voterID, vote);
+  }
+  
+  public static String generateUpdateStatement(String voterID, String vote){
+    return String.format("UPDATE votes SET vote = %s WHERE id = %s", vote, voterID);
+  }
+  
   static void updateVote(Connection dbConn, String voterID, String vote) throws SQLException {
-    PreparedStatement insert = dbConn.prepareStatement(
-      "INSERT INTO votes (id, vote) VALUES (?, ?)");
-    insert.setString(1, voterID);
-    insert.setString(2, vote);
-
+    PreparedStatement insert = dbConn.prepareStatement(generateInsertStatement(voterID, vote));
     try {
       insert.executeUpdate();
     } catch (SQLException e) {
-      PreparedStatement update = dbConn.prepareStatement(
-        "UPDATE votes SET vote = ? WHERE id = ?");
-      update.setString(1, vote);
-      update.setString(2, voterID);
+      PreparedStatement update = dbConn.prepareStatement(generateUpdateStatement(voterID, vote));
       update.executeUpdate();
     }
   }
