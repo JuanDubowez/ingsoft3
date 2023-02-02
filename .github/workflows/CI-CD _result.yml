@@ -38,7 +38,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       # Run node unit tests
-      - name: post unit test
+      - name: Test
         run: |
           cd tpIntegrador/example-voting-app-master/result/
           npm install jest
@@ -49,7 +49,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
         with:
-          name: JEST Tests Results           # Name of the check run which will be created
+          name: Tests Results           # Name of the check run which will be created
           path: 'tpIntegrador/example-voting-app-master/result/junit.xml'    # Path to test results
           reporter: jest-junit  
 

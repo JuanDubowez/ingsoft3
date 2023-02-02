@@ -7,7 +7,7 @@ describe('test result service', () => {
         expect(a).toEqual(43);
         expect(b).toEqual((57));
     });
-    it(': vote only for "a"', (done) => {
+    test(': vote only for "a"', () => {
         let res = collectVotesFromResult({
             rows: [
                 {
@@ -18,12 +18,10 @@ describe('test result service', () => {
         });
         expect(res.a).toEqual(3);
         expect(res.b).toEqual(0);
-        done();
-
     });
 
 
-    it(': vote only for "b"', (done) => {
+    test(': vote only for "b"', () => {
         var res = collectVotesFromResult({
             rows: [
                 {
@@ -34,21 +32,17 @@ describe('test result service', () => {
         });
         expect(res.a).toEqual(0);
         expect(res.b).toEqual(3);
-        done();
-
     });
 
-    it(': no vote', (done) => {
+    test(': no vote', () => {
         var res = collectVotesFromResult({
             rows: [ ]
         });
         expect(res.a).toEqual(0);
         expect(res.b).toEqual(0);
-        done();
-
     });
 
-    it(': vote with different properties', (done) => {
+    test(': vote with different properties',() => {
         var res = collectVotesFromResult({
             rows: [
                 {
@@ -59,11 +53,9 @@ describe('test result service', () => {
         });
         expect(res.a).toEqual(0);
         expect(res.b).toEqual(0);
-        done();
-
     });
 
-    it(': vote to two parties', (done) => {
+    test(': vote to two parties', () => {
         var res = collectVotesFromResult({
             rows: [
                 {
@@ -78,7 +70,5 @@ describe('test result service', () => {
         });
         expect(res.a).toEqual(2);
         expect(res.b).toEqual(2);
-        done();
-
     });
 });
