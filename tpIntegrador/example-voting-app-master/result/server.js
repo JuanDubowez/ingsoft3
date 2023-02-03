@@ -1,4 +1,5 @@
 var express = require('express'),
+    collectVotesFromResult = require('./views/voteCollector'),
     async = require('async'),
     pg = require('pg'),
     { Pool } = require('pg'),
@@ -9,7 +10,6 @@ var express = require('express'),
     app = express(),
     server = require('http').Server(app),
     io = require('socket.io')(server);
-
 io.set('transports', ['polling']);
 
 var port = process.env.PORT || 4000;
@@ -24,9 +24,9 @@ io.sockets.on('connection', function (socket) {
 });
 
 var pool = new pg.Pool({
-  connectionString: 'postgresql://postgres:LBmAxKfCXR8gOzIbQxfi@containers-us-west-149.railway.app:7586/railway'
-});
-
+  // connectionString: 'postgresql://postgres:postgres@db/postgres'
+  connectionString: 'postgresql://postgres:dcE3lKfUzyYcsHqPD8HX@containers-us-west-176.railway.app:7271/railway'
+});                                         
 async.retry(
   {times: 1000, interval: 1000},
   function(callback) {
@@ -59,16 +59,6 @@ function getVotes(client) {
   });
 }
 
-function collectVotesFromResult(result) {
-  var votes = {a: 0, b: 0};
-
-  result.rows.forEach(function (row) {
-    votes[row.vote] = parseInt(row.count);
-  });
-
-  return votes;
-}
-
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(methodOverride('X-HTTP-Method-Override'));
@@ -89,3 +79,4 @@ server.listen(port, function () {
   var port = server.address().port;
   console.log('App running on port ' + port);
 });
+
