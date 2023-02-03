@@ -104,25 +104,23 @@ jobs:
         uses: browser-actions/setup-geckodriver@latest
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          run: geckodriver --version 0.32.1
+          run: geckodriver --version 
       
-      - name: Install dependences
-        run: |
-          cd tpIntegrador/integration_tests/
-          npm install \
-          && npm cache clean --force 
-          npm install selenium-webdriver
-          npm install mocha chai
-
       - name: Sleep for 30 seconds
         uses: jakejarvis/wait-action@master
         with:
-          time: '2m'
+          time: '3m'
+
+      - name: Install dependences
+        run: |
+          cd tpIntegrador/integration_tests/
+          npm i --dev
 
       - name: test
         working-directory: ./tpIntegrador/integration_tests/
         run: |
           npm test
+
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed

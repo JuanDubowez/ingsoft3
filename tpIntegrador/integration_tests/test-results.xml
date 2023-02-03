@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="20.095" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-02-03T20:17:39" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Test script" timestamp="2023-02-03T20:17:39" tests="1" file="/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/integration_tests/integration_a1test.spec.js" time="20.093" failures="0">
+    <testcase name="Test script Vote A check" time="10.779" classname="Vote A check">
+    </testcase>
+  </testsuite>
+</testsuites>

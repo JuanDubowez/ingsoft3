@@ -9,12 +9,12 @@
     "chai": "^4.3.7",
     "mocha": "^10.2.0",
     "mocha-junit-reporter": "^2.2.0",
-    "selenium-webdriver": "^4.6.1"
+    "selenium-webdriver": "^4.8.0"
   },
   "devDependencies": {
     "@types/selenium-webdriver": "^4.1.10"
   },
   "scripts": {
-    "test": "npx mocha --reporter mocha-junit-reporter --timeout 20000 --file *test.spec.js "
+    "test": "npx mocha --reporter mocha-junit-reporter --no-timeout --file *test.spec.js "
   }
 }
