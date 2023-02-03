@@ -121,6 +121,12 @@ jobs:
         with:
           node-version: 16.x
 
+      - name: Install firefox driver
+        uses: browser-actions/setup-geckodriver@latest
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          run: geckodriver --version 
+
       - name: Install dependences
         run: |
           cd tpIntegrador/integration_tests/
