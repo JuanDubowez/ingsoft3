@@ -1,16 +1,15 @@
 var express = require('express'),
+    collectVotesFromResult = require('./views/voteCollector'),
     async = require('async'),
     pg = require('pg'),
     { Pool } = require('pg'),
     path = require('path'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    voteCollector = require('./views/voteCollector')
     methodOverride = require('method-override'),
     app = express(),
     server = require('http').Server(app),
     io = require('socket.io')(server);
-
 io.set('transports', ['polling']);
 
 var port = process.env.PORT || 4000;
@@ -25,7 +24,8 @@ io.sockets.on('connection', function (socket) {
 });
 
 var pool = new pg.Pool({
-  connectionString: 'postgresql://postgres:LBmAxKfCXR8gOzIbQxfi@containers-us-west-149.railway.app:7586/railway'
+  connectionString: 'postgresql://postgres:postgres@db/postgres'
+  // connectionString: 'postgresql://postgres:LBmAxKfCXR8gOzIbQxfi@containers-us-west-149.railway.app:7586/railway'
 });
 
 async.retry(
@@ -52,7 +52,7 @@ function getVotes(client) {
     if (err) {
       console.error("Error performing query: " + err);
     } else {
-      var votes = voteCollector.collectVotesFromResult(result);
+      var votes = collectVotesFromResult(result);
       io.sockets.emit("scores", JSON.stringify(votes));
     }
 

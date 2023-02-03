@@ -7,4 +7,4 @@ function collectVotesFromResult(result) {
   
     return votes;
 }
-module.exports = collectVotesFromResult
+module.exports = collectVotesFromResult;

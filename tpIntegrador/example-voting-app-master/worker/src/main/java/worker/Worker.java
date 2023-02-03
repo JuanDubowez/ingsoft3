@@ -8,8 +8,10 @@ import org.json.JSONObject;
 class Worker {
   public static void main(String[] args) {
     try {
-      Jedis redis = connectToRedis("redis://default:gWXHvdEXQUbaYuu4X2xI@containers-us-west-176.railway.app:7394");
-      Connection dbConn = connectToDB();
+      Jedis redis = connectToRedis("redis");
+      // Jedis redis = connectToRedis("redis://default:gWXHvdEXQUbaYuu4X2xI@containers-us-west-176.railway.app:7394");
+      // Connection dbConn = connectToDB();
+      Connection dbConn = connectToDB("db");
 
       System.err.println("Watching vote queue");
 
@@ -29,11 +31,11 @@ class Worker {
   }
 
   public static String generateInsertStatement(String voterID, String vote){
-    return String.format("INSERT INTO votes (id, vote) VALUES (%s, %s)", voterID, vote);
+    return String.format("INSERT INTO votes (id, vote) VALUES ('%s', '%s')", voterID, vote);
   }
   
   public static String generateUpdateStatement(String voterID, String vote){
-    return String.format("UPDATE votes SET vote = %s WHERE id = %s", vote, voterID);
+    return String.format("UPDATE votes SET vote = '%s' WHERE id = '%s'", vote, voterID);
   }
   
   static void updateVote(Connection dbConn, String voterID, String vote) throws SQLException {
@@ -63,16 +65,18 @@ class Worker {
     return conn;
   }
 
-  static Connection connectToDB() throws SQLException {
+  static Connection connectToDB(String host) throws SQLException {
+  // static Connection connectToDB() throws SQLException {
     Connection conn = null;
 
     try {
-
       Class.forName("org.postgresql.Driver");
-      String url = "jdbc:postgresql://containers-us-west-149.railway.app:7586/railway?user=postgres&password=LBmAxKfCXR8gOzIbQxfi";
+      String url = "jdbc:postgresql://" + host + "/postgres";
+      // String url = "jdbc:postgresql://containers-us-west-149.railway.app:7586/railway?user=postgres&password=LBmAxKfCXR8gOzIbQxfi";
       while (conn == null) {
         try {
-          conn = DriverManager.getConnection(url);
+          // conn = DriverManager.getConnection(url);
+          conn = DriverManager.getConnection(url,"postgres","postgres");
         } catch (SQLException e) {
           System.err.println("Waiting for db");
           sleep(1000);
