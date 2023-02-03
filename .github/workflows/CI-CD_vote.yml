@@ -86,5 +86,37 @@ jobs:
         run: railway up -s vote
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          
+  # job to run integration test service 
+  integration-tests:
+    name: Integration test 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node 16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Install packages
+        run: npm ci
+
+      - name: test
+        run: |
+          cd tpIntegrador/integration-tests
+          npm install selenium-webdriver
+          npm install mocha chai
+          npm test
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: Integration tests Results           # Name of the check run which will be created
+          path: 'tpIntegrador/integration_tests/test-results.xml'   # Path to test results
+          reporter: jest-junit  
+    
+
 
 

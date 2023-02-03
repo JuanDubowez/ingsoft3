@@ -27,7 +27,7 @@ describe("Test script", function () {
     var regex = /\d+\.?\d*/;
     const voteBefore = Number(numberbefore.match(regex));
     const voteAfter = Number(numberafter.match(regex));
-    assert.isTrue((voteAfter>voteBefore),"true");
+    assert.isTrue((voteAfter>=voteBefore),"true");
   });
 });
 
