@@ -49,7 +49,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
         with:
-          name: Tests Results           # Name of the check run which will be created
+          name: Test result service       # Name of the check run which will be created
           path: 'tpIntegrador/example-voting-app-master/result/junit.xml'    # Path to test results
           reporter: jest-junit  
 
@@ -123,11 +123,15 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: test
+      - name: Install dependences
         run: |
           cd tpIntegrador/integration_tests/
-          npm ci \
+          npm install \
           && npm cache clean --force 
+
+      - name: Test
+        run: |
+          cd tpIntegrador/integration_tests/
           npm install selenium-webdriver
           npm install mocha chai
           npm test

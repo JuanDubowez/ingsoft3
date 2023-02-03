@@ -99,15 +99,29 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16.x
-
-      - name: Install packages
-        run: npm ci
-
-      - name: test
+      
+      - name: Install firefox driver
+        uses: browser-actions/setup-geckodriver@latest
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          run: geckodriver --version 0.32.1
+      
+      - name: Install dependences
         run: |
-          cd tpIntegrador/integration-tests
+          cd tpIntegrador/integration_tests/
+          npm install \
+          && npm cache clean --force 
           npm install selenium-webdriver
           npm install mocha chai
+
+      - name: Sleep for 30 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '2m'
+
+      - name: test
+        working-directory: ./tpIntegrador/integration_tests/
+        run: |
           npm test
       - name: Test Report
         uses: dorny/test-reporter@v1

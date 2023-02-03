@@ -24,10 +24,9 @@ io.sockets.on('connection', function (socket) {
 });
 
 var pool = new pg.Pool({
-  connectionString: 'postgresql://postgres:postgres@db/postgres'
-  // connectionString: 'postgresql://postgres:LBmAxKfCXR8gOzIbQxfi@containers-us-west-149.railway.app:7586/railway'
-});
-
+  // connectionString: 'postgresql://postgres:postgres@db/postgres'
+  connectionString: 'postgresql://postgres:dcE3lKfUzyYcsHqPD8HX@containers-us-west-176.railway.app:7271/railway'
+});                                         
 async.retry(
   {times: 1000, interval: 1000},
   function(callback) {

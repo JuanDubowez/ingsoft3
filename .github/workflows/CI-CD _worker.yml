@@ -47,7 +47,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: always()
         with:
-          name: Maven Tests
+          name: Test worker service
           path: 'tpIntegrador/example-voting-app-master/worker/target/surefire-reports/*.xml'
           reporter: java-junit
 
@@ -121,12 +121,15 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Install packages
-        run: npm ci
+      - name: Install dependences
+        run: |
+          cd tpIntegrador/integration_tests/
+          npm install \
+          && npm cache clean --force 
 
       - name: test
         run: |
-          cd tpIntegrador/integration-tests
+          cd tpIntegrador/integration-tests/
           npm install selenium-webdriver
           npm install mocha chai
           npm test

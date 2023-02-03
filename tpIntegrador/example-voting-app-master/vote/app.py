@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, make_response, g
 import redis
-from redis import Redis
+# from redis import Redis
 import os
 import socket
 import random
@@ -19,8 +19,8 @@ app.logger.setLevel(logging.INFO)
 
 def get_redis():
     if not hasattr(g, 'redis'):
-        g.redis = Redis(host="redis", db=0, socket_timeout=5)
-        # g.redis = redis.from_url("redis://default:gWXHvdEXQUbaYuu4X2xI@containers-us-west-176.railway.app:7394")
+        # g.redis = Redis(host="redis", db=0, socket_timeout=5)
+        g.redis = redis.from_url("redis://default:7vNwVkvRO3KCM1qUnBKc@containers-us-west-160.railway.app:7483")
     return g.redis
 
 @app.route("/", methods=['POST','GET'])
