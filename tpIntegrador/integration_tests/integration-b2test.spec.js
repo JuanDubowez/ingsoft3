@@ -6,11 +6,12 @@ const RESULT_URL = "https://finaling3-result.up.railway.app/";
 
 describe("Test script", function () {
   let driver;
-  const options = new Options()
-  options.addArguments(["headless"])
+  const options = new Options();
+  options.addArguments('-headless');
 
   before(async function () {
-    driver = await new Builder().forBrowser('firefox').build();
+    driver = await new Builder().forBrowser('firefox').setFirefoxOptions(options).build();
+
   });
   after(async () => await driver.quit());
 

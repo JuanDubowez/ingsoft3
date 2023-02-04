@@ -130,15 +130,13 @@ jobs:
       - name: Install dependences
         run: |
           cd tpIntegrador/integration_tests/
-          npm install \
-          && npm cache clean --force 
+          npm i --dev
 
       - name: test
+        working-directory: ./tpIntegrador/integration_tests/
         run: |
-          cd tpIntegrador/integration-tests/
-          npm install selenium-webdriver
-          npm install mocha chai
           npm test
+
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed

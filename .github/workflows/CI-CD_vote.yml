@@ -105,11 +105,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           run: geckodriver --version 
-      
-      - name: Sleep for 30 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '3m'
 
       - name: Install dependences
         run: |
