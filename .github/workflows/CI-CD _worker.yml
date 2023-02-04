@@ -4,7 +4,7 @@ name: CI-CD_worker
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ tpIntegrador ]
+    branches: [ tpIntegrador, main ]
     paths:
       - 'tpIntegrador/example-voting-app-master/worker/**'
   pull_request:
