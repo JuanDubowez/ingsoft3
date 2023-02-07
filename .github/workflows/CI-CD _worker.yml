@@ -43,6 +43,18 @@ jobs:
           cd tpIntegrador/example-voting-app-master/worker/
           mvn -B package --file pom.xml
 
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Binary artifact
+          path: tpIntegrador/example-voting-app-master/worker/target/worker-jar-with-dependencies.jar
+      
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Test artifact
+          path: tpIntegrador/example-voting-app-master/worker/target/surefire-reports/*.xml
+
       - name: Report test
         uses: dorny/test-reporter@v1
         if: always()
