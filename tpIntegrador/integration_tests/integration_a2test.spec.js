@@ -11,6 +11,7 @@ describe("Test script", function () {
 
   before(async function () {
     driver = await new Builder().forBrowser('firefox').setFirefoxOptions(options).build();
+    
   });
   after(async () => await driver.quit());
 
