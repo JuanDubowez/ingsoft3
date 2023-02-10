@@ -1,7 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Test Suite" tests="1" failures="0" errors="0" time="3.737">
-  <testsuite name="test result service" errors="0" failures="0" skipped="0" timestamp="2023-01-30T22:08:14" time="2.289" tests="1">
-    <testcase classname="test result service try get porcentages " name="test result service try get porcentages " time="0.004">
+<testsuites name="Test Suite" tests="6" failures="1" errors="0" time="2.156">
+  <testsuite name="test result service" errors="0" failures="1" skipped="0" timestamp="2023-02-10T19:28:11" time="1.359" tests="6">
+    <testcase classname="test result service : get porcentages " name="test result service : get porcentages " time="0.003">
+    </testcase>
+    <testcase classname="test result service : vote only for &quot;a&quot;" name="test result service : vote only for &quot;a&quot;" time="0">
+    </testcase>
+    <testcase classname="test result service : vote only for &quot;b&quot;" name="test result service : vote only for &quot;b&quot;" time="0.003">
+      <failure>Error: expect(received).toEqual(expected) // deep equality
+
+Expected: 2
+Received: 3
+    at Object.toEqual (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/test/app.test.js:34:23)
+    at Promise.then.completed (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-circus/build/utils.js:290:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-circus/build/utils.js:223:10)
+    at _callCircusTest (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-circus/build/run.js:248:40)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at _runTest (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-circus/build/run.js:184:3)
+    at _runTestsForDescribeBlock (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-circus/build/run.js:86:9)
+    at _runTestsForDescribeBlock (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-circus/build/run.js:81:9)
+    at run (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-circus/build/run.js:26:3)
+    at runAndTransformResultsToJestFormat (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:120:21)
+    at jestAdapter (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/home/juandu/Escritorio/INGSOFT3/ingsoft3/tpIntegrador/example-voting-app-master/result/node_modules/jest-runner/build/runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="test result service : no vote" name="test result service : no vote" time="0.001">
+    </testcase>
+    <testcase classname="test result service : vote with different properties" name="test result service : vote with different properties" time="0.002">
+    </testcase>
+    <testcase classname="test result service : vote to two parties" name="test result service : vote to two parties" time="0">
     </testcase>
   </testsuite>
 </testsuites>
