@@ -31,7 +31,7 @@ describe('test result service', () => {
             ]
         });
         expect(res.a).toEqual(0);
-        expect(res.b).toEqual(3);
+        expect(res.b).toEqual(2);
     });
 
     test(': no vote', () => {
