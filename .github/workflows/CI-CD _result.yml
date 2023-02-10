@@ -45,9 +45,7 @@ jobs:
           npm install -D jest-environment-jsdom
           npm install jest-junit 
           npm run test
-      - name: Check on failures
-        if: job.steps.unit-test.status == failure() || job.steps.integration-tests.status == failure()
-        run: exit 1
+          continue-on-error: false
         
       - name: Test Report
         uses: dorny/test-reporter@v1
@@ -142,6 +140,7 @@ jobs:
         working-directory: ./tpIntegrador/integration_tests/
         run: |
           npm test
+        continue-on-error: false
 
       - name: Test Report
         uses: dorny/test-reporter@v1
