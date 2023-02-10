@@ -45,6 +45,10 @@ jobs:
           npm install -D jest-environment-jsdom
           npm install jest-junit 
           npm run test
+      - name: Check on failures
+        if: job.steps.unit-test.status == failure() || job.steps.integration-tests.status == failure()
+        run: exit 1
+        
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
